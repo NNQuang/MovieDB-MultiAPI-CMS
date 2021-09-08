@@ -1,0 +1,116 @@
+﻿@model string
+
+@{
+    ViewBag.Title = "Comments";
+}
+
+<h1 class="mt-4">Comment Panel</h1>
+<div class="content col">
+    <form asp-controller="Comment" asp-action="Approve" id="approve_form">
+        <input type="hidden" id="approve_input" name="commentModel" value="" />
+
+    </form>
+    <form asp-controller="Comment" asp-action="Disable" id="disable_form">
+        <input type="hidden" id="disable_input" name="commentModel" value="" />
+
+    </form>
+    <form asp-controller="Comment" asp-action="Delete" id="delete_form">
+        <input type="hidden" id="delete_input" name="commentModel" value="" />
+
+    </form>
+    <div id="toolbar">
+        <button id="approve" class="btn btn-outline-success toolbarbuttons" enabled>
+            <i class="fa fa-pen"></i> Approve
+        </button>
+        <button id="disable"
+                class="btn btn-warning toolbarbuttons ml-1"
+                enabled>
+            <i class="fas fa-times-circle"></i> Disable
+        </button>
+        <button id="remove"
+                class="btn btn-danger toolbarbuttons ml-1"
+                enabled>
+            <i class="fa fa-trash"></i> Delete
+        </button>
+    </div>
+    <table id="table"
+           data-pagination="true"
+           data-search="true"
+           data-id-field="id"
+           data-page-list="[10, 25, 50, 100, all]"
+           data-click-to-select="true"
+           data-show-fullscreen="true"
+           data-show-columns="true"
+           data-multiple-select-row="true"
+           data-toolbar=".toolbarbuttons">
+        <thead>
+            <tr>
+                <th data-field="state" data-checkbox="true"></th>
+                <th data-field="_id" data-sortable="true">ID</th>
+                <th data-field="movieTitle" data-sortable="true">Movie Title</th>
+                <th data-field="content" data-sortable="true">Comment</th>
+                <th data-field="date" data-sortable="true">Date</th>
+                <th data-field="like" data-sortable="true">Like Count</th>
+                <th data-field="user" data-sortable="true">User</th>
+                <th data-field="isActive" data-sortable="true">Is Active ?</th>
+            </tr>
+        </thead>
+    </table>
+
+    <script>
+        var $remove = $("#remove");
+        var $approve = $("#approve");
+        var $disable = $("#disable");
+        var selections = [];
+
+
+        //silme işlemi
+        $(function () {
+            $remove.click(function () {
+                if ($table.bootstrapTable("getSelections").length === 1) {
+                    $("#delete_input").val(JSON.stringify($table.bootstrapTable("getSelections")[0]));
+
+                    var proceed = confirm("Are you sure you want to delete");
+                    if (proceed) {
+                        $("#delete_form").submit();
+                    }
+
+                } else {
+                    alert("Please select one item.");
+                    $("#delete_input").val('');
+                }
+            });
+        });
+        // approve işlemi
+        $(function () {
+            $approve.click(function () {
+                if ($table.bootstrapTable("getSelections").length === 1) {
+                    $("#approve_input").val(JSON.stringify($table.bootstrapTable("getSelections")[0]));
+
+                    $("#approve_form").submit();
+                } else {
+                    alert("Please select one item.");
+                    $("#approve_input").val('');
+                }
+            });
+        });
+        ////
+
+        $(function () {
+            $disable.click(function () {
+                if ($table.bootstrapTable("getSelections").length === 1) {
+                    $("#disable_input").val(JSON.stringify($table.bootstrapTable("getSelections")[0]));
+
+                    $("#disable_form").submit();
+                } else {
+                    alert("Please select one item.");
+                    $("#disable_input").val('');
+                }
+            });
+        });
+
+        var tempdata = @Html.Raw(@Model);
+        var $table = $("#table");
+        $table.bootstrapTable({ data: tempdata });
+    </script>
+</div>

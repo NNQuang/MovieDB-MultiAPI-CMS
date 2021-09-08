@@ -1,0 +1,18 @@
+﻿@model List<MovieModel>
+@using ClientService.Helpers
+
+@foreach (MovieModel item in Model)
+{
+    <div class="item aos-init aos-animate browse-movie" data-aos="fade" style="display:none">
+        <a asp-controller="Movie" asp-action="DetailView" asp-route-movie="@item.MovieTitle.EncodeSlug()">
+            <figure>
+                <img src="@item.PictureUrl" alt="IMage" class="img-fluid">
+                <figcaption class="hidden-xs">
+                    <i class="bi bi-star-fill"></i>
+                    <h2 class="rating">@item.ImdbRating / 10</h2>
+                </figcaption>
+            </figure>
+        </a>
+    </div>
+}
+

@@ -1,0 +1,157 @@
+﻿@model CommentMovieViewModel
+
+
+@{
+    double imdb_x = Model.MovieModel.ImdbRating * 10;
+    double imdb_y = 200 - imdb_x;
+    double metacritic_y = 200 - Model.MovieModel.MetaCriticRating;
+    double tomato_y = 200 - Model.MovieModel.RottenTomatoesRating;
+
+    ViewBag.Title = Model.MovieModel.MovieTitle;
+}
+<div class="row">
+    <div class="col-sm-8">
+        <div class="row">
+            <div class="col-sm-4">
+                <img src="@Model.MovieModel.PictureUrl" />
+            </div>
+            <div class="col-sm-8">
+                <h1>@Model.MovieModel.MovieTitle</h1>
+                <h4 style="word-spacing: 5px;">
+                    @foreach (var item in Model.MovieModel.Genres)
+                    {
+                        <a asp-controller="Movie" asp-action="GenreMovies" asp-route-id="@item.Id">
+                            @item.GenreName
+                        </a>
+                    }
+                </h4>
+                <p>
+                    Plot : @Model.MovieModel.Plot
+                </p>
+                <div class="mt-3">
+                    <span>Release Date : </span><span>@Model.MovieModel.ReleaseDate.Date.ToShortDateString()</span><br />
+                    <span>Duration : </span><span>160 min</span><br />
+                </div>
+                <div class="mt-3">
+                    <span>Director : </span><a asp-controller="Movie" asp-action="DirectorMovies" asp-route-id="@Model.MovieModel.Director.Id">@Model.MovieModel.Director.FullName</a><br />
+                    <span>Actors : </span>
+                    @{
+                        var actors = Model.MovieModel.Actors.ToList();
+                        for (int i = 0; i < actors.Count(); i++)
+                        {
+                            if (i != actors.Count() - 1)
+                            {
+                                <a asp-controller="Movie" asp-action="ActorMovies" asp-route-id="@actors[i].Id">@actors[i].FullName</a><span> ,</span>
+                            }
+                            else
+                            {
+                                <a asp-controller="Movie" asp-action="ActorMovies" asp-route-id="@actors[i].Id">@actors[i].FullName</a>
+                            }
+                        }
+                    }
+                </div>
+            </div>
+        </div>
+    </div>
+    <div class="col-sm-4 mt-2">
+        <div class="row">
+            <h3 class="text-center ml-auto mr-auto">Ratings</h3>
+        </div>
+        <div class="row text-center">
+            <div class="col-sm-4">
+                <img src="~/img/imdb.png" height="55" /><br />
+                <div class="gauge-chart">
+                    <svg viewBox="0 0 80 40" class="gauge">
+                        <circle class="donut-ring" cx="40" cy="40" r="31.8309886184" fill="transparent" stroke="red" stroke-width="15"></circle>
+                        <circle class="donut-segment" cx="40" cy="40" r="31.8309886184" fill="transparent" stroke="#b3ffab" stroke-width="15" stroke-dasharray="@imdb_x @imdb_y" stroke-dashoffset="-100">
+                            <animate attributeType='XML' attributeName='stroke-dashoffset' values='0; 0; -33; -100; -100;' keyTimes='0; 0.4; 0.6; 0.7; 1' dur='2.5s' repeatCount='1'></animate>
+                        </circle>
+                        <text x="40" y="39.5" class="gauge-text">@Model.MovieModel.ImdbRating</text>
+                    </svg>
+                </div>
+            </div>
+            <div class="col-sm-4">
+                <img src="~/img/rottenTomato.png" height="55" /><br />
+                <div class="gauge-chart">
+                    <svg viewBox="0 0 80 40" class="gauge">
+                        <circle class="donut-ring" cx="40" cy="40" r="31.8309886184" fill="transparent" stroke="red" stroke-width="15"></circle>
+                        <circle class="donut-segment" cx="40" cy="40" r="31.8309886184" fill="transparent" stroke="#b3ffab" stroke-width="15" stroke-dasharray="@Model.MovieModel.RottenTomatoesRating @tomato_y" stroke-dashoffset="-100">
+                            <animate attributeType='XML' attributeName='stroke-dashoffset' values='0; 0; -33; -100; -100;' keyTimes='0; 0.4; 0.6; 0.7; 1' dur='2.5s' repeatCount='1'></animate>
+                        </circle>
+                        <text x="40" y="39.5" class="gauge-text">@Model.MovieModel.RottenTomatoesRating</text>
+                    </svg>
+                </div>
+            </div>
+            <div class="col-sm-4">
+                <img src="~/img/metacritic.png" height="55" /><br />
+                <div class="gauge-chart">
+                    <svg viewBox="0 0 80 40" class="gauge">
+                        <circle class="donut-ring" cx="40" cy="40" r="31.8309886184" fill="transparent" stroke="red" stroke-width="15"></circle>
+                        <circle class="donut-segment" cx="40" cy="40" r="31.8309886184" fill="transparent" stroke="#b3ffab" stroke-width="15" stroke-dasharray="@Model.MovieModel.MetaCriticRating @metacritic_y" stroke-dashoffset="-100">
+                            <animate attributeType='XML' attributeName='stroke-dashoffset' values='0; 0; -33; -100; -100;' keyTimes='0; 0.4; 0.6; 0.7; 1' dur='2.5s' repeatCount='1'></animate>
+                        </circle>
+                        <text x="40" y="39.5" class="gauge-text">@Model.MovieModel.MetaCriticRating</text>
+                    </svg>
+                </div>
+            </div>
+        </div>
+        <div class="row" id="comment-section">
+            <div class="container justify-content-center mt-5">
+                @{
+                    if (Model.CommentListModel.Comments is null)
+                    {
+                        <div class="d-flex justify-content-center py-2">
+                            <div class="second py-2 px-2">
+                                <span class="text1">Wow such empty.</span>
+                                <div class="d-flex justify-content-between py-1 pt-2">
+                                    <div><span class="text2"> </span></div>
+                                    <div><span class="text3">Upvote?</span><span class="text3"><i class="bi bi-hand-thumbs-up"></i></span><span class="text4">1</span></div>
+                                </div>
+                            </div>
+                        </div>
+                    }
+                    else
+                    {
+                        @foreach (CommentModel item in Model.CommentListModel.Comments)
+                        {
+                            <div class="d-flex justify-content-center py-2">
+                                <div class="second py-2 px-2">
+                                    <span class="text1">@item.content</span>
+                                    <div class="d-flex justify-content-between py-1 pt-2">
+                                        <div><span class="text2">@item.user</span></div>
+                                        <div><span class="text3">Upvote?</span><span class="text3"><i class="bi bi-hand-thumbs-up"></i></span><span class="text4" id="@item._id">@item.like.ToString()</span></div>
+                                    </div>
+                                </div>
+                            </div>
+                        }
+                    }
+                }
+                @if (User.Identity.IsAuthenticated)
+                {
+                    <div class="d-flex justify-content-center pt-3 pb-2">
+                        <form class="form-group" method="post" asp-controller="UserComment" asp-action="AddComment">
+                            <textarea class="form-control" id="commentArea" rows="3" name="content"></textarea>
+                            <input type="submit" name="text" placeholder="Add Comment" class="form-control addtxt">
+                            <input type="hidden" name="username" value="@User.Identity.Name" />
+                            <input type="hidden" name="movie_title" value="@Model.MovieModel.MovieTitle" />
+                            <input type="hidden" name="url" value=" " />
+
+                        </form>
+                    </div>
+                }
+                else
+                {
+                    <div class="d-flex justify-content-center pt-3 pb-2"> <input type="text" name="text" placeholder="Login to leave a Comment" class="form-control addtxt"> </div>
+                }
+
+            </div>
+        </div>
+
+    </div>
+</div>
+<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+<script src="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"
+        integrity="sha384-B4gt1jrGC7Jh4AgTPSdUtOBvfO8shuf57BaghqFfPlYxofvL8/KUEfYiJOMMV+rV"
+        crossorigin="anonymous"></script>
+<script src='https://stackpath.bootstrapcdn.com/bootstrap/4.4.1/js/bootstrap.bundle.min.js'></script>
+

@@ -1,0 +1,21 @@
+﻿@{ 
+    Layout="";
+    ViewBag.Title = "404 Not Found";
+}
+
+
+
+<section class="notFound">
+    <div class="img">
+        <img src="~/img/404/backToTheHomepage.webp" alt="Back to the Homepage" />
+        <img src="~/img/404/Delorean.webp" alt="El Delorean, El Doc y Marti McFly" />
+        <link rel="stylesheet" href="~/css/404.css">
+    </div>
+    <div class="text">
+        <h1>404</h1>
+        <h2>PAGE NOT FOUND</h2>
+        <h3>BACK TO HOME?</h3>
+        <a asp-controller="Movie" asp-action="Index" class="yes">YES</a>
+        <a href="">NO</a>
+    </div>
+</section>

@@ -1,0 +1,139 @@
+{
+  "Routes": [
+    {
+      "DownstreamPathTemplate": "/Api/Auth/{url}",
+      "DownstreamScheme": "http",
+      "DownstreamHostAndPorts": [
+        {
+          "Host": "Insert Auth Service IP",
+          "Port": 80
+        }
+      ],
+      "UpstreamPathTemplate": "/Auth/{url}",
+      "UpstreamHttpMethod": ["POST"]
+    },
+    {
+      "DownstreamPathTemplate": "/Api/User/{url}",
+      "DownstreamScheme": "http",
+      "DownstreamHostAndPorts": [
+        {
+          "Host": "Insert Auth Service IP",
+          "Port": 80
+        }
+      ],
+      "UpstreamPathTemplate": "/User/{url}",
+      "UpstreamHttpMethod": ["GET", "POST", "PUT"]
+    },
+    {
+      "DownstreamPathTemplate": "/Api/Actors/{url}",
+      "DownstreamScheme": "http",
+      "DownstreamHostAndPorts": [
+        {
+          "Host": "Insert Movie Service IP",
+          "Port": 80
+        }
+      ],
+      "UpstreamPathTemplate": "/Actors/{url}",
+      "UpstreamHttpMethod": ["GET", "POST", "PUT", "PATCH"]
+    },
+    {
+      "DownstreamPathTemplate": "/Api/Actors",
+      "DownstreamScheme": "http",
+      "DownstreamHostAndPorts": [
+        {
+          "Host": "Insert Movie Service IP",
+          "Port": 80
+        }
+      ],
+      "UpstreamPathTemplate": "/Actors",
+      "UpstreamHttpMethod": ["GET"]
+    },
+    {
+      "DownstreamPathTemplate": "/Api/Movies/{url}",
+      "DownstreamScheme": "http",
+      "DownstreamHostAndPorts": [
+        {
+          "Host": "Insert Movie Service IP",
+          "Port": 80
+        }
+      ],
+      "UpstreamPathTemplate": "/Movies/{url}",
+      "UpstreamHttpMethod": ["GET", "POST", "PUT", "PATCH"]
+    },
+    {
+      "DownstreamPathTemplate": "/Api/Movies",
+      "DownstreamScheme": "http",
+      "DownstreamHostAndPorts": [
+        {
+          "Host": "Insert Movie Service IP",
+          "Port": 80
+        }
+      ],
+      "UpstreamPathTemplate": "/Movies",
+      "UpstreamHttpMethod": ["GET"]
+    },
+    {
+      "DownstreamPathTemplate": "/Api/Directors/{url}",
+      "DownstreamScheme": "http",
+      "DownstreamHostAndPorts": [
+        {
+          "Host": "Insert Movie Service IP",
+          "Port": 80
+        }
+      ],
+      "UpstreamPathTemplate": "/Directors/{url}",
+      "UpstreamHttpMethod": ["GET", "POST", "PUT", "PATCH"]
+    },
+    {
+      "DownstreamPathTemplate": "/Api/Directors",
+      "DownstreamScheme": "http",
+      "DownstreamHostAndPorts": [
+        {
+          "Host": "Insert Movie Service IP",
+          "Port": 80
+        }
+      ],
+      "UpstreamPathTemplate": "/Directors",
+      "UpstreamHttpMethod": ["GET"]
+    },
+    {
+      "DownstreamPathTemplate": "/Api/Genres/{url}",
+      "DownstreamScheme": "http",
+      "DownstreamHostAndPorts": [
+        {
+          "Host": "Insert Movie Service IP",
+          "Port": 80
+        }
+      ],
+      "UpstreamPathTemplate": "/Genres/{url}",
+      "UpstreamHttpMethod": ["GET", "POST", "PUT", "PATCH"]
+    },
+    {
+      "DownstreamPathTemplate": "/Api/Genres",
+      "DownstreamScheme": "http",
+      "DownstreamHostAndPorts": [
+        {
+          "Host": "Insert Movie Service IP",
+          "Port": 80
+        }
+      ],
+      "UpstreamPathTemplate": "/Genres",
+      "UpstreamHttpMethod": ["GET"]
+    },
+    {
+      "DownstreamPathTemplate": "/graphql",
+      "DownstreamScheme": "https",
+      "DownstreamHostAndPorts": [
+        {
+          "Host": "graphql.fauna.com",
+          "Port": 80
+        }
+      ],
+      "UpstreamPathTemplate": "/graphql",
+      "UpstreamHttpMethod": ["GET", "POST"]
+    }
+  ],
+  "GlobalConfiguration": {
+    "BaseUrl": "http://localhost:80"
+  }
+}

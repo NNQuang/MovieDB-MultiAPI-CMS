@@ -1,0 +1,204 @@
+﻿figcaption {
+    opacity: 0;
+    top: 25%;
+    bottom: 0;
+    margin: auto;
+    position: absolute;
+    left: 0;
+    right: 0;
+}
+
+.browse-movie:hover figcaption {
+    opacity: 1;
+}
+
+.browse-movie:hover {
+    text-align: center;
+    color: white;
+    border: 5px solid #ffbe17;
+}
+
+.browse-movie {
+    position: relative;
+    border: 5px solid #040404;
+}
+
+
+
+.h2 h2 {
+    display: table;
+    font-size: 35px !important;
+    font-weight: bold !important;
+    font-family: Arimo,Arial,Helvetica,"Lucida Grande",sans-serif !important;
+}
+
+a {
+    color: white;
+}
+
+a:hover figcaption {
+        color: white;
+}
+
+.container-fluid .row {
+    margin-left: 5%;
+    margin-right: 5%;
+}
+
+.bi-star-fill {
+    font-size: 4rem;
+    color: #ffbe17
+}
+
+
+@import url("https://fonts.googleapis.com/css?family=Josefin+Sans:100,400");
+
+.gauge-chart {
+    width: 7rem;
+    margin: auto;
+    margin-top: 10px;
+}
+
+.gauge-text {
+    text-anchor: middle;
+    fill: #b3ffab;
+    font-weight: 400;
+    font-size: 100%;
+    text-align: center;
+}
+
+.gauge-chart p {
+    text-align: center;
+}
+
+@media (min-width: 1200px) {
+    .container {
+        max-width: 1550px !important;
+    }
+}
+
+figure{
+    margin:0 0 0rem!important;
+}
+
+.bg-dark {
+    margin-left: 20%;
+    margin-right: 20%;
+}
+
+.login {
+    margin-bottom: 5px;
+}
+
+.dropdown-menu {
+    width: 300px !important;
+}
+
+#searchbox .form-control{
+    color:white!important;
+}
+
+
+/*Comments section buradan başlıyor*/
+
+#comment-section body {
+    background-color: #fff
+}
+
+#comment-section .container {
+    background-color: #0a0a0a;
+    width: 400px
+}
+
+#commentArea{
+    color: white!important;
+}
+
+.addtxt {
+    padding-top: 10px;
+    padding-bottom: 10px;
+    text-align: center;
+    font-size: 13px;
+    width: 350px;
+    font-weight: 500;
+    color:white!important;
+}
+
+#comment-section.form-control:focus {
+    color: #000
+}
+
+.second {
+    width: 350px;
+    background-color: white;
+    border-radius: 4px;
+    box-shadow: 5px 5px 2px #aaaaaa
+}
+
+.text1 {
+    font-size: 13px;
+    font-weight: 500;
+    color: #56575b
+}
+
+.text2 {
+    font-size: 13px;
+    font-weight: 500;
+    margin-left: 6px;
+    color: #56575b
+}
+
+.text3 {
+    font-size: 13px;
+    font-weight: 500;
+    margin-right: 4px;
+    color: #828386
+}
+
+.text3o {
+    color: #00a5f4
+}
+
+.text4 {
+    font-size: 13px;
+    font-weight: 500;
+    color: #828386
+}
+
+.text4i {
+    color: #00a5f4
+}
+
+.text4o {
+    color: white
+}
+
+.thumbup {
+    font-size: 13px;
+    font-weight: 500;
+    margin-right: 5px
+}
+
+.thumbupo {
+    color: #17a2b8
+}
+
+.card-header {
+    background-color: rgb(0 0 0 / 79%)!important;
+}
+
+.card-body {
+    background-color: rgb(0 0 0/95%)!important;
+}
+
+.card-footer {
+    background-color: rgb(0 0 0/75%) !important;
+}
+
+#registerForm .form-control{
+    color:white!important;
+}
+
+.main {
+    min-height:100%!important;
+}

@@ -1,0 +1,136 @@
+﻿@model MovieUpdateDataViewModel
+
+@{
+    ViewBag.Title = $"Edit {Model.MovieUpdateDto.MovieTitle} Details";
+}
+
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-select@1.13.14/dist/css/bootstrap-select.min.css" />
+
+<h1 class="mt-4">@Model.MovieUpdateDto.MovieTitle Details</h1>
+<div class="col-sm-6">
+    <form method="post" asp-controller="Movie" asp-action="Update" enctype="multipart/form-data">
+        <div asp-validation-summary="All" class="text-danger" id="validation-summary" aria-hidden="true" style="display: none;"></div>
+        <input type="hidden" asp-for="MovieUpdateDto.Id" />
+        <input type="hidden" asp-for="MovieUpdateDto.ImdbId" />
+        <input type="hidden" asp-for="MovieUpdateDto.PictureUrl" />
+        <input type="hidden" asp-for="MovieUpdateDto.ModifiedByName" value="@User.Identity.Name" />
+        <div class="form-group">
+            <label asp-for="MovieUpdateDto.MovieTitle">Movie Title</label>
+            <input class="form-control" asp-for="MovieUpdateDto.MovieTitle" />
+            <span class="text-danger" asp-validation-for="MovieUpdateDto.MovieTitle"></span>
+        </div>
+        <div class="form-group form-check">
+            <input type="checkbox" class="form-check-input" asp-for="MovieUpdateDto.IsActive" />
+            <label asp-for="MovieUpdateDto.IsActive" class="form-check-label"></label>
+            <span class="text-danger" asp-validation-for="MovieUpdateDto.IsActive"></span>
+        </div>
+        <div class="form-group form-check">
+            <input type="checkbox" class="form-check-input" asp-for="MovieUpdateDto.IsDeleted" />
+            <label asp-for="MovieUpdateDto.IsDeleted" class="form-check-label"></label>
+            <span class="text-danger" asp-validation-for="MovieUpdateDto.IsDeleted"></span>
+        </div>
+        <div class="form-group">
+            <label asp-for="MovieUpdateDto.PictureFile"></label>
+            <input type="file" accept="image/*" class="form-control-file" asp-for="MovieUpdateDto.PictureFile" placeholder="Uplaod image" />
+        </div>
+        <div class="form-group">
+            <label asp-for="AllActors"></label>
+            <select class="form-control" id="selectMovies" multiple="multiple" asp-for="MovieUpdateDto.ActorIdArray">
+
+                @{
+                    var movieActorIds = Model.MovieUpdateDto.Actors.Select(x => new KeyValuePair<int, string>(x.Id, x.FullName)).ToDictionary(x => x.Key, x => x.Value);
+                    var allActorIds = Model.AllActors.Actors.Select(x => new KeyValuePair<int, string>(x.Id, x.FullName)).ToDictionary(x => x.Key, x => x.Value);
+
+                    foreach (var item in allActorIds)
+                    {
+                        if (movieActorIds.Contains(item))
+                        {
+                            <option selected value="@item.Key">@item.Value</option>
+                        }
+                        else
+                        {
+                            <option value="@item.Key">@item.Value</option>
+                        }
+                    }
+                }
+            </select>
+        </div>
+        <div class="form-group">
+            <label asp-for="AllGenres"></label>
+            <select class="form-control" id="selectGenres" multiple="multiple" asp-for="MovieUpdateDto.GenreIdArray">
+                @{
+                    foreach (var item in Model.AllGenres.Genres)
+                    {
+                        if (Model.MovieUpdateDto.Genres.Select(x => x.Id).ToList().Contains(item.Id))
+                        {
+                            <option selected value="@item.Id">@item.GenreName</option>
+                        }
+                        else
+                        {
+                            <option value="@item.Id">@item.GenreName</option>
+
+                        }
+                    }
+                }
+            </select>
+        </div>
+        <div class="form-group">
+            <label asp-for="MovieUpdateDto.DirectorId"></label>
+            <select class="selectpicker form-control" id="selectDirector" asp-for="MovieUpdateDto.DirectorId" data-live-search="true">
+                @foreach (var item in Model.AllDirectors.Directors)
+                {
+                    if (Model.MovieUpdateDto.DirectorId == item.Id)
+                    {
+                        <option selected value="@item.Id">@item.FullName</option>
+                    }
+                    else
+                    {
+                        <option value="@item.Id">@item.FullName</option>
+                    }
+                }
+            </select>
+            <span class="text-danger" asp-validation-for="MovieUpdateDto.DirectorId"></span>
+        </div>
+        <div class="form-group">
+            <label asp-for="MovieUpdateDto.ImdbRating">Imdb Rating</label>
+            <input class="form-control" asp-for="MovieUpdateDto.ImdbRating" type="number" max="10" />
+            <span class="text-danger" asp-validation-for="MovieUpdateDto.ImdbRating"></span>
+        </div>
+        <div class="form-group">
+            <label asp-for="MovieUpdateDto.RottenTomatoesRating">RottenTomatoesRating Rating</label>
+            <input class="form-control" asp-for="MovieUpdateDto.RottenTomatoesRating" type="number" max="100" />
+            <span class="text-danger" asp-validation-for="MovieUpdateDto.RottenTomatoesRating"></span>
+        </div>
+        <div class="form-group">
+            <label asp-for="MovieUpdateDto.MetaCriticRating">MetaCriticRating Rating</label>
+            <input class="form-control" asp-for="MovieUpdateDto.MetaCriticRating" type="number" max="100" />
+            <span class="text-danger" asp-validation-for="MovieUpdateDto.MetaCriticRating"></span>
+        </div>
+        <div class="form-group">
+            <label asp-for="MovieUpdateDto.Language">Language</label>
+            <input class="form-control" asp-for="MovieUpdateDto.Language" />
+            <span class="text-danger" asp-validation-for="MovieUpdateDto.Language"></span>
+        </div>
+        <div class="form-group">
+            <label asp-for="MovieUpdateDto.Duration">Duration(min)</label>
+            <input class="form-control" asp-for="MovieUpdateDto.Duration" />
+            <span class="text-danger" asp-validation-for="MovieUpdateDto.Duration"></span>
+        </div>
+        <div class="form-group">
+            <label asp-for="MovieUpdateDto.ReleaseDate">Release Date</label>
+            <input class="form-control" type="date" asp-for="MovieUpdateDto.ReleaseDate" />
+            <span class="text-danger" asp-validation-for="MovieUpdateDto.ReleaseDate"></span>
+        </div>
+        <div class="form-group">
+            <label asp-for="MovieUpdateDto.Plot">Plot</label>
+            <textarea class="form-control" asp-for="MovieUpdateDto.Plot" rows="4">@Model.MovieUpdateDto.Plot</textarea>
+            <span class="text-danger" asp-validation-for="MovieUpdateDto.Plot"></span>
+        </div>
+        <button type="submit" class="btn btn-primary">Save</button>
+    </form>
+</div>
+
+<script src="https://cdn.jsdelivr.net/npm/bootstrap-select@1.13.14/dist/js/bootstrap-select.min.js"></script>
+<script>
+    $('.selectpicker').selectpicker();
+</script>

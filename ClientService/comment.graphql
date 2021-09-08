@@ -1,0 +1,15 @@
+type Comment {
+  user: String!
+  content: String!
+  date: String!
+  like: Int!
+  movieTitle: String!
+  isActive: Boolean!
+}
+
+type Query {
+  activeCommentsByMovieTitle(movieTitle: String!, isActive:Boolean!): [Comment!]
+  allComments: [Comment!]!
+  allActiveComments(isActive: Boolean!): [Comment!]
+}
+

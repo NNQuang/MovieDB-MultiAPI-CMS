@@ -1,0 +1,51 @@
+﻿@model DirectorUpdateDto
+
+@{
+    ViewBag.Title = $"Edit {Model.FullName} Details";
+}
+
+<h1 class="mt-4">@Model.FullName Details</h1>
+<div class="col-sm-6">
+    <form method="post" asp-controller="Director" asp-action="Update">
+        <div asp-validation-summary="All" class="text-danger" id="validation-summary" aria-hidden="true" style="display: none;"></div>
+        <input type="hidden" asp-for="Id" />
+        <input type="hidden" asp-for="PictureUrl" />
+        <input type="hidden" asp-for="ModifiedByName" value="@User.Identity.Name" />
+        <div class="form-group">
+            <label asp-for="FullName"></label>
+            <input class="form-control" asp-for="FullName" />
+            <span class="text-danger" asp-validation-for="FullName"></span>
+        </div>
+        <div class="form-group form-check">
+            <input type="checkbox" class="form-check-input" asp-for="IsActive" />
+            <label asp-for="IsActive" class="form-check-label"></label>
+            <span class="text-danger" asp-validation-for="IsActive"></span>
+        </div>
+        <div class="form-group form-check">
+            <input type="checkbox" class="form-check-input" asp-for="IsDeleted" />
+            <label asp-for="IsDeleted" class="form-check-label"></label>
+            <span class="text-danger" asp-validation-for="IsDeleted"></span>
+        </div>
+        <div class="form-group">
+            <label asp-for="PictureFile"></label>
+            <input type="file" accept="image/*" class="form-control-file" asp-for="PictureFile" placeholder="Uplaod image" />
+            <span class="text-danger" asp-validation-for="PictureFile"></span>
+        </div>
+        <div class="form-group">
+            <label asp-for="Movies"></label>
+            <select class="form-control" id="selectMovies" multiple="multiple" disabled>
+
+                @{
+                    foreach (var item in Model.Movies)
+                    {
+                        <option selected>@item.MovieTitle</option>
+                    }
+                }
+            </select>
+            <span class="text-danger">Please make queries from the Movies Tab (One-to-Many entity delete behaviour.)</span>
+        </div>
+
+
+        <button type="submit" class="btn btn-primary">Save</button>
+    </form>
+</div>

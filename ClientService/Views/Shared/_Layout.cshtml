@@ -1,0 +1,121 @@
+﻿@using Microsoft.AspNetCore.Authorization;
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>@ViewBag.Title - Home</title>
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css" integrity="sha384-JcKb8q3iqJ61gNV9KGb8thSsNjpSL0n8PARn9HuZOnIxN0hoP+VmmDGMN5t9UJ0Z" crossorigin="anonymous">
+    <link rel="stylesheet" href="~/css/style.css">
+    <link rel="stylesheet" href="~/css/miniStyle.css">
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.4.1/font/bootstrap-icons.css">
+
+</head>
+<body>
+    <header>
+        <nav class="navbar navbar-expand-lg bg-transparent bg-dark">
+            <div class="container-fluid ml-auto">
+                <span class="navbar-brand" href="http://cagrisakaoglu.com">Çağrı Sakaoğlu</span>
+                <button class="navbar-toggler"
+                        type="button"
+                        data-bs-toggle="collapse"
+                        data-bs-target="#navbarColor01"
+                        aria-controls="navbarColor01"
+                        aria-expanded="false"
+                        aria-label="Toggle navigation">
+                    <span class="navbar-toggler-icon"></span>
+                </button>
+                <div class="collapse navbar-collapse row" id="navbarColor01">
+                    <ul class="navbar-nav me-auto mb-2 mb-lg-0 col">
+                        <li class="nav-item">
+                            <a class="nav-link active" asp-controller="Home" asp-action="Index">Home</a>
+                        </li>
+                        <li class="nav-item">
+                            <a class="nav-link" href="https://github.com/ilovepilav">Github</a>
+                        </li>
+                        <li class="nav-item dropdown">
+                            <a class="nav-link dropdown-toggle"
+                               id="projectsDropdown"
+                               role="button"
+                               data-toggle="dropdown"
+                               aria-haspopup="true"
+                               aria-expanded="false"
+                               href="#">Projects</a>
+                            <div class="dropdown-menu" aria-labelledby="projectsDropdown">
+                                <a class="dropdown-item" asp-controller="Movie" asp-action="Index">Movie DB Project</a>
+                                <a class="dropdown-item" href="https://drcanancaliskan.com/" target="_blank">Dr. Canan Çalışkan</a>
+                            </div>
+                        </li>
+                        <li class="nav-item">
+                            <a class="nav-link" href="#">About</a>
+                        </li>
+                    </ul>
+                    @if (User.Identity.IsAuthenticated)
+                    {
+                        <ul class="navbar-nav mr-right">
+                            <li class="nav-item navbar-text"><span>@User.Identity.Name</span></li>
+                            @if (User.IsInRole("Admin"))
+                            {
+                                <li class="nav-item">
+
+                                    <a asp-controller="Admin" asp-action="Home" class="nav-link">Admin Panel</a>
+                                </li>
+                            }
+                            <li class="nav-item">
+                                <a asp-controller="Auth" asp-action="LogOut" class="nav-link">Logout</a>
+                            </li>
+                        </ul>
+                    }
+                    else
+                    {
+                        <ul class="navbar-nav mr-right" id="loginform">
+                            <li class="nav-item dropdown">
+                                <a class="nav-link dropdown-toggle" href="" id="navbarDropdownMenuLink" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                                    Login
+                                </a>
+                                <div class="dropdown-menu p-3">
+                                    <form class="form-horizontal" method="post" accept-charset="UTF-8" asp-area="Movie" asp-controller="Auth" asp-action="Login">
+                                        <input class="form-control login" type="email" name="Email" placeholder="Email">
+                                        <input class="form-control login" type="password" name="Password" placeholder="Password">
+                                        <input class="btn btn-primary" type="submit" name="submit" value="Login">
+                                    </form>
+                                </div>
+                            </li>
+                            <li class="nav-item">
+                                <a class="nav-link" href="http://example.com" id="navbarDropdownMenuLink" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                                    Register
+                                </a>
+                            </li>
+                        </ul>
+                    }
+
+                    <form class="d-flex" method="get" asp-area="Movie" asp-controller="Movie" asp-action="Search" id="searchbox">
+                        <input class="form-control me-2"
+                               type="search"
+                               placeholder="Search"
+                               aria-label="Search"
+                               name="movieName" />
+                        <button class="btn btn-outline-light" type="submit">
+                            Search
+                        </button>
+                    </form>
+                </div>
+            </div>
+        </nav>
+    </header>
+    <div class="main">
+        <div class="container">
+            @RenderBody()
+        </div>
+    </div>
+
+    <footer class="border-top footer text-muted">
+        <div class="container">
+            &copy; 2021 - cagrisakaoglu.com - <a asp-area="" asp-controller="Home" asp-action="Privacy">Privacy</a>
+        </div>
+    </footer>
+
+    @await RenderSectionAsync("Scripts", required: false)
+</body>
+</html>

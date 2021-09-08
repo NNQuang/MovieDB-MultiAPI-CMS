@@ -1,0 +1,26 @@
+﻿@model DirectorAddDto
+
+@{ 
+    ViewBag.Title = "Create Director";
+}
+
+<h1 class="mt-4">Create Director</h1>
+<div class="col-sm-6">
+    <form method="post" asp-controller="Director" asp-action="Create" enctype="multipart/form-data">
+        <div asp-validation-summary="All" class="text-danger" id="validation-summary" aria-hidden="true" style="display: none;"></div>
+        <input type="hidden" asp-for="CreatedByName" value="@User.Identity.Name" />
+        <div class="form-group">
+            <label asp-for="FullName">Director Name</label>
+            <input class="form-control" asp-for="FullName" />
+            <span class="text-danger" asp-validation-for="FullName"></span>
+        </div>
+        <div class="form-group">
+            <label asp-for="PictureFile"></label>
+            <input type="file" class="form-control-file" asp-for="PictureFile" placeholder="Uplaod image" />
+            <span class="text-danger" asp-validation-for="PictureFile"></span>
+        </div>
+
+        <button type="submit" class="btn btn-primary">Save</button>
+    </form>
+</div>
+

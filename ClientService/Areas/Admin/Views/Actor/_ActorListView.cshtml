@@ -1,0 +1,99 @@
+﻿@model string
+
+@{
+    ViewBag.Title = "Actors";
+}
+
+<h1 class="mt-4">Actor Panel</h1>
+<div class="content col">
+    <form asp-controller="Actor" asp-action="Edit" id="edit_form">
+        <input type="hidden" id="edit_input" name="actorId" value="" />
+
+    </form>
+    <form asp-controller="Actor" asp-action="Delete" id="delete_form">
+        <input type="hidden" id="delete_input" name="actorId" value="" />
+
+    </form>
+    <div id="toolbar">
+        <button id="edit" class="btn btn-primary toolbarbuttons" enabled>
+            <i class="fa fa-pen"></i> Edit
+        </button>
+        <button id="remove"
+                class="btn btn-danger toolbarbuttons ml-1"
+                enabled>
+            <i class="fa fa-trash"></i> Delete
+        </button>
+        <a id="addNew"
+           class="btn btn-outline-success toolbarbuttons ml-1"
+           enabled asp-action="Create">
+            <i class="fa fa-file"></i> Create
+        </a>
+    </div>
+    <table id="table"
+           data-pagination="true"
+           data-search="true"
+           data-id-field="id"
+           data-page-list="[10, 25, 50, 100, all]"
+           data-click-to-select="true"
+           data-show-fullscreen="true"
+           data-show-columns="true"
+           data-multiple-select-row="true"
+           data-toolbar=".toolbarbuttons">
+        <thead>
+            <tr>
+                <th data-field="state" data-checkbox="true"></th>
+                <th data-field="id" data-sortable="true">ID</th>
+                <th data-field="fullName" data-sortable="true">Full Name</th>
+                <th data-field="isActive" data-sortable="true">Active</th>
+                <th data-field="isDeleted" data-sortable="true">Deleted</th>
+                <th data-field="createdByName" data-sortable="true">Created By</th>
+                <th data-field="modifiedByName" data-sortable="true">Modified By</th>
+                <th data-field="createdDate" data-sortable="true">Create Date</th>
+                <th data-field="modifiedDate" data-sortable="true">Modified Date</th>
+            </tr>
+        </thead>
+    </table>
+
+    <script>
+        var $remove = $("#remove");
+        var $edit = $("#edit");
+        var selections = [];
+
+
+        //silme işlemi
+        $(function () {
+            $remove.click(function () {
+                if ($table.bootstrapTable("getSelections").length === 1) {
+                    $("#delete_input").val(JSON.stringify($table.bootstrapTable("getSelections")[0].id));
+
+                    var proceed = confirm("Are you sure you want to delete");
+                    if (proceed) {
+                        $("#delete_form").submit();
+                    }
+
+                } else {
+                    alert("Please select one item.");
+                    $("#delete_input").val('');
+                }
+            });
+        });
+        // edit işlemi
+        $(function () {
+            $edit.click(function () {
+                if ($table.bootstrapTable("getSelections").length === 1) {
+                    $("#edit_input").val(JSON.stringify($table.bootstrapTable("getSelections")[0].id));
+
+                    $("#edit_form").submit();
+                } else {
+                    alert("Please select one item.");
+                    $("#edit_input").val('');
+                }
+            });
+        });
+        ////
+
+        var tempdata = @Html.Raw(@Model);
+        var $table = $("#table");
+        $table.bootstrapTable({ data: tempdata });
+    </script>
+</div>

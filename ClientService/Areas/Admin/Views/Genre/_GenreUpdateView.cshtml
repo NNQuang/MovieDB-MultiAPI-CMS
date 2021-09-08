@@ -1,0 +1,54 @@
+﻿@model GenreMovieViewModel
+
+@{
+    ViewBag.Title = $"Edit {Model.GenreUpdateDto.GenreName} Details";
+}
+
+<h1 class="mt-4">@Model.GenreUpdateDto.GenreName Details</h1>
+<div class="col-sm-6">
+    <form method="post" asp-controller="Genre" asp-action="Update">
+        <div asp-validation-summary="All" class="text-danger" id="validation-summary" aria-hidden="true" style="display: none;"></div>
+        <input type="hidden" asp-for="GenreUpdateDto.Id" />
+        <input type="hidden" asp-for="GenreUpdateDto.ModifiedByName" value="@User.Identity.Name" />
+        <div class="form-group">
+            <label asp-for="GenreUpdateDto.GenreName"></label>
+            <input class="form-control" asp-for="GenreUpdateDto.GenreName" />
+            <span class="text-danger" asp-validation-for="GenreUpdateDto.GenreName"></span>
+        </div>
+        <div class="form-group form-check">
+            <input type="checkbox" class="form-check-input" asp-for="GenreUpdateDto.IsActive" />
+            <label asp-for="GenreUpdateDto.IsActive" class="form-check-label"></label>
+            <span class="text-danger" asp-validation-for="GenreUpdateDto.IsActive"></span>
+        </div>
+        <div class="form-group form-check">
+            <input type="checkbox" class="form-check-input" asp-for="GenreUpdateDto.IsDeleted" />
+            <label asp-for="GenreUpdateDto.IsDeleted" class="form-check-label"></label>
+            <span class="text-danger" asp-validation-for="GenreUpdateDto.IsDeleted"></span>
+        </div>
+        <div class="form-group">
+            <label asp-for="AllMovies"></label>
+            <select class="form-control" id="selectMovies" multiple="multiple" name="MovieIdArray">
+                @*multiple class="form-control""*@
+                @*Multiselect listbox'a item eklemek için Key/Value olarak Id/MovieTitle içeren iki dictionary kullandım, model sınıflarımda movie Id listesi gibi bir property eklemek istemedim hem çirkin olacaktı hem de geç kaldık.Linq sorgusu ve dictionary kullanmamın nedeni zaten hali hazırda bir angarya iş yaptığımız için olabilecek en hızlı şekilde sorguyu tamamlamak.*@
+                @{
+                    var genreMovieIds = Model.GenreUpdateDto.Movies.Select(x => new KeyValuePair<int, string>(x.Id, x.MovieTitle)).ToDictionary(x => x.Key, x => x.Value);
+                    var allMovieIds = Model.AllMovies.Movies.Select(x => new KeyValuePair<int, string>(x.Id, x.MovieTitle)).ToDictionary(x => x.Key, x => x.Value);
+
+                    foreach (var item in allMovieIds)
+                    {
+                        if (genreMovieIds.Contains(item))
+                        {
+                    <option value="@item.Key" selected>@item.Value</option>
+                        }
+                        else
+                        {
+                    <option value="@item.Key">@item.Value</option>
+                        }
+                    }
+                }
+            </select>
+        </div>
+
+        <button type="submit" class="btn btn-primary">Save</button>
+    </form>
+</div>

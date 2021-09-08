@@ -1,0 +1,34 @@
+﻿@model Tuple<GenreAddDto, MovieListModel>
+
+@{
+    ViewBag.Title = "Create Genre";
+}
+
+<h1 class="mt-4">Create Genre</h1>
+<div class="col-sm-6">
+    <form method="post" asp-controller="Genre" asp-action="Create" enctype="multipart/form-data">
+        <div asp-validation-summary="All" class="text-danger" id="validation-summary" aria-hidden="true" style="display: none;"></div>
+        <input type="hidden" asp-for="Item1.CreatedByName" value="@User.Identity.Name" />
+        <div class="form-group">
+            <label asp-for="Item1.GenreName"></label>
+            <input class="form-control" asp-for="Item1.GenreName" />
+            <span class="text-danger" asp-validation-for="Item1.GenreName"></span>
+        </div>
+        <div class="form-group">
+            <label asp-for="Item2.Movies"></label>
+            <select class="form-control multiSelectTable" id="selectMovies" multiple="multiple" asp-for="Item1.MovieIdArray">
+
+                @{
+                    foreach (var movieItem in Model.Item2.Movies)
+                    {
+                        <option value="@movieItem.Id">@movieItem.MovieTitle</option>
+                    }
+
+                }
+            </select>
+        </div>
+
+        <button type="submit" class="btn btn-primary">Save</button>
+    </form>
+</div>
+

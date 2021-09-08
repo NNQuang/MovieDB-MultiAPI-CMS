@@ -1,0 +1,42 @@
+﻿@model Tuple<ActorAddDto, MovieListModel>
+
+@{ 
+    ViewBag.Title = "Create Actor";
+}
+
+<h1 class="mt-4">Create Actor</h1>
+<div class="col-sm-6">
+    <form method="post" asp-controller="Actor" asp-action="Create" enctype="multipart/form-data">
+        <input name="IsValid" type="hidden" value="@ViewData.ModelState.IsValid.ToString()" />
+        <div asp-validation-summary="All" class="text-danger" id="validation-summary" aria-hidden="true" style="display: none;"></div>
+        <input type="hidden" asp-for="Item1.CreatedByName" value="@User.Identity.Name" />
+        <div class="form-group">
+            <label asp-for="Item1.FullName"></label>
+            <input class="form-control" asp-for="Item1.FullName" />
+            <span class="text-danger" asp-validation-for="Item1.FullName"></span>
+        </div>
+        <div class="form-group">
+            <label asp-for="Item2.Movies"></label>
+            <select class="form-control multiSelectTable" id="selectMovies" multiple="multiple" asp-for="Item1.MovieIdArray">
+
+                @{
+                    foreach (var movieItem in Model.Item2.Movies)
+                    {
+                        <option value="@movieItem.Id">@movieItem.MovieTitle</option>
+                    }
+
+                }
+            </select>
+        </div>
+        <div class="form-group">
+            <label asp-for="Item1.PictureFile"></label>
+            <input type="file" class="form-control-file" asp-for="Item1.PictureFile" placeholder="Uplaod image" accept="image/*"/>
+            <span class="text-danger" asp-validation-for="Item1.PictureFile"></span>
+        </div>
+
+
+
+        <button type="submit" class="btn btn-primary">Save</button>
+    </form>
+</div>
+

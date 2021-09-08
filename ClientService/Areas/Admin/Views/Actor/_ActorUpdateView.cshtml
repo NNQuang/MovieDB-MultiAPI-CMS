@@ -1,0 +1,61 @@
+﻿@model ActorMovieViewModel
+
+@{
+    ViewBag.Title = $"Edit {Model.ActorUpdateDto.FullName} Details";
+}
+
+
+<h1 class="mt-4">@Model.ActorUpdateDto.FullName Details</h1>
+<div class="col-sm-6">
+    <form method="post" asp-controller="Actor" asp-action="Update">
+        <div asp-validation-summary="All" class="text-danger" id="validation-summary" aria-hidden="true" style="display: none;"></div>
+        <input type="hidden" asp-for="ActorUpdateDto.Id" />
+        <input type="hidden" asp-for="ActorUpdateDto.PictureUrl" />
+        <input type="hidden" asp-for="ActorUpdateDto.ModifiedByName" value="@User.Identity.Name" />
+        <div class="form-group">
+            <label asp-for="ActorUpdateDto.FullName"></label>
+            <input class="form-control" asp-for="ActorUpdateDto.FullName" />
+            <span class="text-danger" asp-validation-for="ActorUpdateDto.FullName"></span>
+        </div>
+        <div class="form-group form-check">
+            <input type="checkbox" class="form-check-input" asp-for="ActorUpdateDto.IsActive" />
+            <label asp-for="ActorUpdateDto.IsActive" class="form-check-label"></label>
+            <span class="text-danger" asp-validation-for="ActorUpdateDto.IsActive"></span>
+        </div>
+        <div class="form-group form-check">
+            <input type="checkbox" class="form-check-input" asp-for="ActorUpdateDto.IsDeleted" />
+            <label asp-for="ActorUpdateDto.IsDeleted" class="form-check-label"></label>
+            <span class="text-danger" asp-validation-for="ActorUpdateDto.IsDeleted"></span>
+        </div>
+        <div class="form-group">
+            <label asp-for="ActorUpdateDto.PictureFile"></label>
+            <input type="file" accept="image/*" class="form-control-file" asp-for="ActorUpdateDto.PictureFile" placeholder="Uplaod image" />
+            <span class="text-danger" asp-validation-for="ActorUpdateDto.PictureFile"></span>
+        </div>
+        <div class="form-group">
+            <label asp-for="AllMovies"></label>
+            <select class="form-control multiSelectTable" id="selectMovies" multiple="multiple" name="MovieIdArray">
+
+                @{
+                    var actorMovieIds = Model.ActorUpdateDto.Movies.Select(x => new KeyValuePair<int, string>(x.Id, x.MovieTitle)).ToDictionary(x => x.Key, x => x.Value);
+                    var allMovieIds = Model.AllMovies.Movies.Select(x => new KeyValuePair<int, string>(x.Id, x.MovieTitle)).ToDictionary(x => x.Key, x => x.Value);
+
+                    foreach (var item in allMovieIds)
+                    {
+                        if (actorMovieIds.Contains(item))
+                        {
+                            <option value="@item.Key" selected>@item.Value</option>
+                        }
+                        else
+                        {
+                            <option value="@item.Key">@item.Value</option>
+                        }
+                    }
+                }
+            </select>
+        </div>
+
+        <button type="submit" class="btn btn-primary">Save</button>
+    </form>
+</div>
+
