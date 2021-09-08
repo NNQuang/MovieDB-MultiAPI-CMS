@@ -2,7 +2,7 @@
 
 MovieDB-MultiAPI-CMS is a Imdb-like movie database website which is created with .NET5.
 
-![MovieDB-MultiAPI-CMS Project Diagram!](/MovieHome/wwwroot/img/MovieDB-MultiAPI-CMS-diagram.png)
+![MovieDB-MultiAPI-CMS Project Diagram!](https://github.com/ilovepilav/MovieDB-MultiAPI-CMS/blob/main/ClientService/wwwroot/img/moviedb-microservice-diagram.png)
 
 In this repository i developed a movie catalog website using .NET5. When creating the project my main goal was becoming familiar with WebAPIs and Distributed Applications. You can check project live [cagrisakaoglu.com/movie](https://cagrisakaoglu.com/movie)
 
