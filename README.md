@@ -52,7 +52,7 @@ This service is managing CRUD operations and Business logic. With 'Code First Ap
 
 Project has its own content management system. You can add/update/delete any movie related data also you can manage users and user comments.
 
-<iframe width="560" height="315" src="https://www.youtube.com/embed/mkkgSOabAJo" title="YouTube video player" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" allowfullscreen></iframe>
+[![Panel Video](https://github.com/ilovepilav/MovieDB-MultiAPI-CMS/blob/main/ClientService/wwwroot/img/youtubeimg.JPG)](https://www.youtube.com/watch?v=mkkgSOabAJo 'Click to watch')
 
 ---
 
