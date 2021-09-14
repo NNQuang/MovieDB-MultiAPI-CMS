@@ -10,12 +10,11 @@ namespace MovieService.Business.Extensions
     {
         public static IServiceCollection LoadMyServices(this IServiceCollection serviceCollection)
         {
-            //serviceCollection.AddDbContext<MovieDbContext>(options => options.UseSqlServer(connectionString));
-            serviceCollection.AddScoped<IUnitOfWork, UnitOfWork>();
-            serviceCollection.AddScoped<IActorService, ActorManager>();
-            serviceCollection.AddScoped<IGenreService, GenreManager>();
-            serviceCollection.AddScoped<IMovieService, MovieManager>();
-            serviceCollection.AddScoped<IDirectorService, DirectorManager>();
+            serviceCollection.AddSingleton<IUnitOfWork, UnitOfWork>();
+            serviceCollection.AddSingleton<IActorService, ActorManager>();
+            serviceCollection.AddSingleton<IGenreService, GenreManager>();
+            serviceCollection.AddSingleton<IMovieService, MovieManager>();
+            serviceCollection.AddSingleton<IDirectorService, DirectorManager>();
 
             return serviceCollection;
         }
